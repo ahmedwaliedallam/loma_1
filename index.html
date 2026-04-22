@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Home — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li class="active"><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li class="active"><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+<section id="home-section">
+  <header class="hero-section">
+    <div class="hero-bg">
+      <img src="images/cloudCh.jpg" alt="Cloud Kitchen" class="hero-image"/>
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-badge">🌿 Smart Cloud Kitchen</div>
+      <h1>Your Smart Cloud Kitchen —<br/><em>Save Food, Save Money.</em></h1>
+      <p class="hero-lead">We connect cloud kitchens and restaurants to customers through fresh meals and safe returned offers.</p>
+      <div class="hero-buttons">
+        <a href="new_meal.html" class="hero-btn active"><i class="fas fa-utensils" style="margin-right:8px"></i>Fresh Meals</a>
+        <a href="return_meal.html" class="hero-btn"><i class="fas fa-recycle" style="margin-right:8px"></i>Returned Meals</a>
+      </div>
+    </div>
+    <div class="hero-scroll"><i class="fas fa-chevron-down"></i><span>Scroll</span></div>
+  </header>
+</section>
+<section class="features">
+  <div class="co">
+    <div class="sec-title"><h2>How It Works</h2><p>We combine a premium cloud kitchen with a sustainable approach to food delivery.</p></div>
+    <div class="card-grid">
+      <div class="card2"><div class="card2-icon green"><i class="fas fa-utensils"></i></div><h3>Fresh Cloud Kitchen</h3><p>Professional chefs prepare high-quality meals daily in our hygienic cloud kitchens.</p></div>
+      <div class="card2"><div class="card2-icon orange"><i class="fas fa-recycle"></i></div><h3>Returned Meals</h3><p>Meals returned due to wrong orders or late delivery are quality-checked and resold at a discount.</p></div>
+      <div class="card2"><div class="card2-icon dark"><i class="fas fa-truck-fast"></i></div><h3>Fast Delivery</h3><p>Get your food delivered to your doorstep quickly and efficiently every time.</p></div>
+    </div>
+  </div>
+</section>
+<section class="why-section">
+  <div class="co">
+    <div class="sec-title"><h2>Why Choose Lo'ma?</h2><p>Quality food, honest prices, and a planet-friendly mission.</p></div>
+    <div class="why-grid">
+      <div class="why-item"><div class="why-icon"><i class="fas fa-tag"></i></div><div><h4>Save Money</h4><p>Get premium meals for up to 50% off when you choose returned meals.</p></div></div>
+      <div class="why-item"><div class="why-icon"><i class="fas fa-leaf"></i></div><div><h4>Reduce Waste</h4><p>Help save perfectly good food from being thrown away every day.</p></div></div>
+      <div class="why-item"><div class="why-icon"><i class="fas fa-hand-holding-heart"></i></div><div><h4>Support Kitchens</h4><p>Help restaurants minimize losses and stay financially sustainable.</p></div></div>
+    </div>
+  </div>
+</section>
+<footer>
+  <div class="co">
+    <div class="footer-content">
+      <div class="footer-col"><div class="footer-logo">Lo'<span>ma</span></div><p>Save Food, Save Money.<br/>Your smart cloud kitchen platform.</p></div>
+      <div class="footer-col"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="new_meal.html">Fresh Meals</a></li><li><a href="return_meal.html">Returned Meals</a></li><li><a href="about.html">About Us</a></li></ul></div>
+      <div class="footer-col"><h3>Account</h3><ul><li><a href="login.html">Log In</a></li><li><a href="signup.html">Sign Up</a></li></ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul><li><i class="fas fa-envelope"></i> support@loma.com</li><li><i class="fas fa-phone"></i> +1 234 567 8900</li></ul></div>
+    </div>
+    <div class="copyright"><p>&copy; 2025 Lo'ma Project. Designed for Web Development Course.</p></div>
+  </div>
+</footer>
+<script src="main.js"></script>
+<script src="modal.js"></script>
+</body>
+</html>

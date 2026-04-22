@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<section class="welcome-section">
+  <h1>Welcome to <span class="highlight">Lo'ma</span></h1>
+  <p class="welcome-lead">Are you a customer looking for great meals, or a restaurant with returned meals to list?</p>
+  <div class="roles-cards">
+    <a href="return_meal.html" class="role-card" style="text-decoration:none">
+      <div class="role-icon"><i class="fas fa-user iconfront-icon"></i></div>
+      <h2>I'm a Customer</h2>
+      <p>Browse discounted returned meals and save money on delicious food near you.</p>
+    </a>
+    <a href="restaurant.html" class="role-card" style="text-decoration:none">
+      <div class="role-icon"><i class="fas fa-store iconfront-icon"></i></div>
+      <h2>I'm a Restaurant</h2>
+      <p>List your returned meals and recover costs while reducing food waste.</p>
+    </a>
+  </div>
+</section>
+
+<script src="main.js"></script>
+<script src="modal.js"></script>
+</body>
+</html>

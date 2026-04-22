@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>List a Returned Meal — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<section id="restaurant-form-section" class="form-section">
+  <form class="returned-form" onsubmit="event.preventDefault(); alert('Meal submitted for review!');">
+    <h2>List a Returned Meal</h2>
+    <p class="form-lead">Fill out the form below to add a new meal to the platform.</p>
+    <div class="fields-row">
+      <div class="form-group"><label>Restaurant Name</label><input type="text" placeholder="The Corner Bistro" required/></div>
+      <div class="form-group"><label>Meal Name</label><input type="text" placeholder="e.g., Gourmet Burger" required/></div>
+    </div>
+    <div class="form-group">
+      <label>Reason for Return</label>
+      <select>
+        <option value="">Select a reason...</option>
+        <option>Incorrect Order</option>
+        <option>Missing Items</option>
+        <option>Late Delivery</option>
+        <option>Cancellation</option>
+        <option>Wrong Ingredients</option>
+        <option>Cold food</option>
+      </select>
+    </div>
+    <div class="fields-row">
+      <div class="form-group"><label>Quantity</label><input type="number" min="1" placeholder="e.g., 5" required/></div>
+      <div class="form-group"><label>Discount %</label><input type="number" min="0" max="100" placeholder="e.g., 50" required/></div>
+      <div class="form-group"><label>Expiry Time</label><input type="datetime-local" required/></div>
+    </div>
+    <div class="form-group">
+      <label>Meal Image</label>
+      <div class="image-upload">
+        <label for="meal-img">
+          <div class="upload-area">
+            <i class="fas fa-cloud-upload-alt" style="font-size:1.8rem;margin-bottom:10px;color:var(--green-mid)"></i><br/>
+            <span class="upload-link">Upload a file</span> or drag and drop<br/>
+            <span class="upload-hint">PNG, JPG, GIF up to 10MB</span>
+          </div>
+        </label>
+        <input id="meal-img" type="file" accept="image/png,image/jpeg,image/gif" style="display:none"/>
+      </div>
+    </div>
+    <button class="submit-btn" type="submit">Submit for Review</button>
+  </form>
+</section>
+
+<script src="main.js"></script>
+<script src="modal.js"></script>
+</body>
+</html>

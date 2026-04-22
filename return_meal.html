@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Returned Meals — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li class="active"><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li class="active"><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<section id="returned-meals" class="returned-meals-section">
+  <h2 class="section-title">Available Returned Meals</h2>
+  <p class="section-subtitle">Delicious meals at a discount, ready for a second chance.</p>
+
+  <div class="sorting-bar-wrap">
+    <span class="sort-label">Sort by:</span>
+    <button class="sort-btn c">Discount <i class="fa-solid fa-arrow-down"></i></button>
+    <button class="sort-btn">Expiry Time <i class="fa-solid fa-caret-down"></i></button>
+    <button class="sort-btn">Restaurant <i class="fa-solid fa-caret-down"></i></button>
+  </div>
+
+  <div class="meals-grid">
+    <div class="meal-card">
+      <div class="badge green">20% OFF</div>
+      <img src="images/imgi_1_AB6AXuAU_MiuWjsYbmlNjgg6Ix5aVu0BZY2G3AiM7qBfUS2k9fbfPWR9vL-_4yEFIML0pV7SAkkLgm1nwr09vm9QCd7Y8yw5iYo0gjBVlNGRJPvX_fcOEJnzNA_H-t-eA2S7s_1fT0WBOywDuQC7HX7HX_oLSBNHdhVr3orCe-U11N.png" class="re-meal-img" alt="Meal 1"/>
+      <div class="meal-card-body">
+        <h3>Grilled Chicken Platter</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>The Corner Bistro</p>
+        <p class="reason">Reason: Wrong delivery address</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 9:00 PM</p>
+        <div class="price-box"><span class="new-price">$11.99</span><span class="old-price">$14.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="badge green">35% OFF</div>
+      <img src="images/imgi_2_AB6AXuAPEaIL-dSHH_pXjUM929THlhWaPtWGsuReXyouCqsIDNXkub_0-Kofia5WLMZm3hfO76fucldx2bPr4IDtgGTs8VIZ9yO49BaJ0pFBNwVhrVR1feJwr4fWSHww0VR2niJxpHjtFqY4SKgiubgqV3byphzABePXmRq_4PdRL4.png" class="re-meal-img" alt="Meal 2"/>
+      <div class="meal-card-body">
+        <h3>Beef Burger Combo</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>Urban Grill</p>
+        <p class="reason">Reason: Cancelled order</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 10:30 PM</p>
+        <div class="price-box"><span class="new-price">$9.74</span><span class="old-price">$14.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="badge green">50% OFF</div>
+      <img src="images/imgi_3_AB6AXuCkLAHHtVcmGGBOwdHu68PzHdmELyTwJOxKX3S2Kg4GkRFidbm2dnbsFdhnDdgxuoD_HE-HkkrLwXKtX31NquqNU7j-ASLFKgY93J6y583A6T32_5UbmN7_3yZbLEW3JHrfl1G_ANAionEBX-HnWWrTQMqU-IcLV7ASMOuOaq.png" class="re-meal-img" alt="Meal 3"/>
+      <div class="meal-card-body">
+        <h3>Pasta Carbonara</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>La Cucina</p>
+        <p class="reason">Reason: Late delivery</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 8:00 PM</p>
+        <div class="price-box"><span class="new-price">$7.49</span><span class="old-price">$14.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="badge green">25% OFF</div>
+      <img src="images/imgi_4_AB6AXuBSM4ZEUmYD7Xi-FwE1gskjFAjh7xiffUIPmG5RxHE8Vi9v-RlB8ErQ0eEV1NnnhtMO8Vyn1k8DfnFm61USwqx2rjKIvzUCEWG9M6USCwanEYV35oO7e_jxZVn7VX-7EQ-1c7cItsuFsPFy_EcpVnDeSVadvHPgiVUsRkWuQv.png" class="re-meal-img" alt="Meal 4"/>
+      <div class="meal-card-body">
+        <h3>Sushi Platter</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>Tokyo House</p>
+        <p class="reason">Reason: Missing items reported</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 7:30 PM</p>
+        <div class="price-box"><span class="new-price">$18.74</span><span class="old-price">$24.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="badge green">40% OFF</div>
+      <img src="images/imgi_5_AB6AXuCEPWDxJHkwMe8za-eezKhbxyphtDjK0V3xp-r9DOtyB4tM4A6T3WcmBvKJDsVLoyuAi5Ph6y3FmfaTInBQ376wsd4AirFT5LgQXwZQhwzXBAxkeZE5lGZuJB-Ol3eczwrEOov2iWJQW3atLIZhn2LhD_fvO9hVP7JscYj5uW.png" class="re-meal-img" alt="Meal 5"/>
+      <div class="meal-card-body">
+        <h3>Falafel Wrap</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>Green Garden</p>
+        <p class="reason">Reason: Wrong ingredients order</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 11:00 PM</p>
+        <div class="price-box"><span class="new-price">$5.99</span><span class="old-price">$9.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+    <div class="meal-card">
+      <div class="badge green">30% OFF</div>
+      <img src="images/imgi_1_AB6AXuCi7Imi3IneVNPkQ8t3FwyKVgCsFLSgs8rJ_HT3wehtZ4Pv6iD5nYoGCvTpywGIfh3__fOHBXmpiyPaSBUoFa3c4AGQ8bJa9C10qx_Wn0eJMo2H34VhCItJPCXy8ntN32D5rWOxqtY8-0lrpnXV9HCZIQ1vv07bQeudXkZ.png" class="re-meal-img" alt="Meal 6"/>
+      <div class="meal-card-body">
+        <h3>Margherita Pizza Slice</h3>
+        <p class="restaurant"><i class="fas fa-store" style="margin-right:6px"></i>Napoli Oven</p>
+        <p class="reason">Reason: Cold food complaint</p>
+        <p class="expiry"><i class="fas fa-clock" style="margin-right:6px"></i>Expires: Today 9:30 PM</p>
+        <div class="price-box"><span class="new-price">$6.99</span><span class="old-price">$9.99</span></div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="co">
+    <div class="footer-content">
+      <div class="footer-col"><div class="footer-logo">Lo'<span>ma</span></div><p>Save Food, Save Money.</p></div>
+      <div class="footer-col"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="new_meal.html">Fresh Meals</a></li><li><a href="return_meal.html">Returned Meals</a></li><li><a href="about.html">About Us</a></li></ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul><li><i class="fas fa-envelope"></i> support@loma.com</li><li><i class="fas fa-phone"></i> +1 234 567 8900</li></ul></div>
+    </div>
+    <div class="copyright"><p>&copy; 2025 Lo'ma Project. Designed for Web Development Course.</p></div>
+  </div>
+</footer>
+<script src="main.js"></script>
+<script src="modal.js"></script>
+</body>
+</html>

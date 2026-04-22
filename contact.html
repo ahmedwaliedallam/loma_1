@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li class="active"><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li class="active"><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<section class="contact-section">
+  <div class="co">
+    <div class="sec-title">
+      <h2>Get In Touch</h2>
+      <p>Have a question or want to partner with us? We'd love to hear from you.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-info-item">
+          <h4>Visit Us</h4>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Cloud Kitchen Street, Sadat City</p>
+        </div>
+        <div class="contact-info-item">
+          <h4>Email Us</h4>
+          <p><i class="fas fa-envelope"></i> hello@loma-project.com</p>
+        </div>
+        <div class="contact-info-item">
+          <h4>Call Us</h4>
+          <p><i class="fas fa-phone"></i> +1 (555) 123-4567</p>
+        </div>
+      </div>
+      <div class="contact-form-card">
+        <form onsubmit="event.preventDefault(); alert('Message sent! (Front-end demo)');">
+          <div class="form-group2"><label for="name">Your Name</label><input type="text" id="name" class="form-control" placeholder="John Doe" required/></div>
+          <div class="form-group2"><label for="email">Your Email</label><input type="email" id="email" class="form-control" placeholder="john@example.com" required/></div>
+          <div class="form-group2"><label for="subject">Subject</label>
+            <select id="subject" class="form-control">
+              <option>General Inquiry</option>
+              <option>Order Issue</option>
+              <option>Partner with us</option>
+            </select>
+          </div>
+          <div class="form-group2"><label for="message">Message</label><textarea id="message" class="form-control" rows="5" placeholder="How can we help?" required></textarea></div>
+          <button type="submit" class="btnn btnn-primary" style="width:100%">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="co">
+    <div class="footer-content">
+      <div class="footer-col"><div class="footer-logo">Lo'<span>ma</span></div><p>Save Food, Save Money.</p></div>
+      <div class="footer-col"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="new_meal.html">Fresh Meals</a></li><li><a href="return_meal.html">Returned Meals</a></li><li><a href="about.html">About Us</a></li></ul></div>
+      <div class="footer-col"><h3>Contact</h3><ul><li><i class="fas fa-envelope"></i> support@loma.com</li><li><i class="fas fa-phone"></i> +1 234 567 8900</li></ul></div>
+    </div>
+    <div class="copyright"><p>&copy; 2025 Lo'ma Project. Designed for Web Development Course.</p></div>
+  </div>
+</footer>
+<script src="main.js"></script>
+<script src="modal.js"></script>
+</body>
+</html>
