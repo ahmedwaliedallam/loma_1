@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .checkout-page{min-height:100vh;padding:100px 24px 60px;background:var(--bg)}
+    .checkout-header{text-align:center;margin-bottom:44px}
+    .checkout-header h1{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.5rem);font-weight:900;color:var(--dark);margin-bottom:8px}
+    .checkout-header p{color:var(--text-muted);font-size:1rem}
+    .checkout-steps{display:flex;justify-content:center;align-items:center;gap:0;margin-bottom:44px}
+    .c-step{display:flex;align-items:center;gap:8px;font-size:0.85rem;font-weight:600;color:var(--text-muted)}
+    .c-step.active{color:var(--green-mid)}
+    .c-step.done{color:var(--green-mid)}
+    .c-step-num{width:28px;height:28px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:0.78rem;font-weight:700;flex-shrink:0}
+    .c-step.done .c-step-num{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+    .c-step.active .c-step-num{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+    .c-step-line{width:60px;height:2px;background:var(--border);margin:0 8px;flex-shrink:0}
+    @media(max-width:480px){.c-step-line{width:24px}.c-step-text{display:none}}
+
+    .checkout-layout{max-width:1020px;margin:0 auto;display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start}
+    @media(max-width:820px){.checkout-layout{grid-template-columns:1fr}}
+
+    .co-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:30px 28px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+    .co-card-title{font-size:0.78rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px;display:flex;align-items:center;gap:8px}
+    .co-card-title i{color:var(--green-mid);font-size:0.88rem}
+
+    /* Form fields */
+    .co-fgroup{margin-bottom:18px}
+    .co-fgroup label{display:block;font-weight:600;font-size:0.9rem;color:var(--text);margin-bottom:8px}
+    .co-fgroup input,.co-fgroup textarea,.co-fgroup select{width:100%;padding:12px 14px;font-size:0.93rem;font-family:var(--font-body);border:1.5px solid var(--border);border-radius:10px;background:var(--bg);transition:var(--transition);outline:none;color:var(--text)}
+    .co-fgroup input:focus,.co-fgroup textarea:focus{border-color:var(--green-mid);box-shadow:0 0 0 3px rgba(46,139,74,0.1);background:var(--white)}
+    .co-frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:480px){.co-frow{grid-template-columns:1fr}}
+
+    /* Payment options */
+    .payment-options{display:flex;flex-direction:column;gap:12px}
+    .payment-option{display:flex;align-items:center;gap:14px;padding:16px 18px;border:2px solid var(--border);border-radius:12px;cursor:pointer;transition:var(--transition);background:var(--bg)}
+    .payment-option:hover{border-color:var(--green-mid);background:var(--green-light)}
+    .payment-option.selected{border-color:var(--green-mid);background:var(--green-light)}
+    .payment-radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition)}
+    .payment-option.selected .payment-radio{border-color:var(--green-mid)}
+    .payment-radio::after{content:'';width:10px;height:10px;border-radius:50%;background:var(--green-mid);opacity:0;transition:opacity 0.2s}
+    .payment-option.selected .payment-radio::after{opacity:1}
+    .payment-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .payment-icon.cod{background:#fff3e0;color:#f57c00}
+    .payment-icon.card{background:#e3f2fd;color:#1976d2}
+    .payment-icon.wallet{background:var(--green-light);color:var(--green-mid)}
+    .payment-label{flex:1}
+    .payment-label strong{display:block;font-size:0.93rem;color:var(--dark);margin-bottom:2px}
+    .payment-label span{font-size:0.82rem;color:var(--text-muted)}
+
+    /* Card details (hidden by default) */
+    .card-details{margin-top:16px;padding:16px;background:var(--bg);border-radius:10px;border:1px solid var(--border);display:none}
+    .card-details.show{display:block}
+
+    /* Order summary */
+    .order-summary-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px 24px;box-shadow:var(--shadow-sm);position:sticky;top:90px}
+    .summary-title{font-family:var(--font-display);font-size:1.1rem;font-weight:800;color:var(--dark);margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+    .summary-items{display:flex;flex-direction:column;gap:14px;margin-bottom:20px}
+    .summary-item{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .summary-item-info .s-name{font-weight:600;font-size:0.92rem;color:var(--dark)}
+    .summary-item-info .s-meta{font-size:0.8rem;color:var(--text-muted)}
+    .summary-item-price{font-weight:700;font-size:0.93rem;color:var(--dark);white-space:nowrap}
+    .summary-divider{height:1px;background:var(--border);margin:16px 0}
+    .summary-row{display:flex;justify-content:space-between;font-size:0.9rem;color:var(--text-muted);margin-bottom:10px}
+    .summary-row.saving{color:var(--green-mid);font-weight:600}
+    .summary-row.total{font-size:1.1rem;font-weight:800;color:var(--dark);margin-bottom:0;margin-top:4px}
+    .empty-cart-msg{text-align:center;padding:30px 10px;color:var(--text-muted);font-size:0.9rem}
+    .empty-cart-msg a{color:var(--green-mid);font-weight:600}
+
+    /* Place order button */
+    .place-order-btn{width:100%;padding:15px;background:var(--green-mid);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:1rem;font-family:var(--font-body);cursor:pointer;transition:var(--transition);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px}
+    .place-order-btn:hover{background:var(--green-deep);transform:translateY(-2px);box-shadow:0 8px 28px rgba(46,139,74,0.35)}
+    .place-order-btn:disabled{opacity:0.6;cursor:not-allowed;transform:none}
+    .secure-note{display:flex;align-items:center;justify-content:center;gap:6px;font-size:0.8rem;color:var(--text-muted);margin-top:12px}
+    .secure-note i{color:var(--green-mid)}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="custORrest.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="cart-icon-btn" href="#" onclick="window.lomaCart&&lomaCart.toggleSidebar();return false;" id="cartNavBtn" title="Your Cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </a>
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="custORrest.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<div class="checkout-page">
+  <div class="checkout-header">
+    <h1>Checkout</h1>
+    <p>You're just a few steps away from your meal!</p>
+  </div>
+
+  <div class="checkout-steps">
+    <div class="c-step done">
+      <div class="c-step-num"><i class="fas fa-check"></i></div>
+      <span class="c-step-text">Cart</span>
+    </div>
+    <div class="c-step-line"></div>
+    <div class="c-step active">
+      <div class="c-step-num">2</div>
+      <span class="c-step-text">Checkout</span>
+    </div>
+    <div class="c-step-line"></div>
+    <div class="c-step">
+      <div class="c-step-num">3</div>
+      <span class="c-step-text">Confirmation</span>
+    </div>
+  </div>
+
+  <div class="checkout-layout">
+    <!-- Left: Forms -->
+    <div>
+      <!-- Delivery address -->
+      <div class="co-card">
+        <div class="co-card-title"><i class="fas fa-map-marker-alt"></i> Delivery Address</div>
+        <div class="co-frow">
+          <div class="co-fgroup">
+            <label>First Name</label>
+            <input type="text" id="fname" placeholder="John" required/>
+          </div>
+          <div class="co-fgroup">
+            <label>Last Name</label>
+            <input type="text" id="lname" placeholder="Doe" required/>
+          </div>
+        </div>
+        <div class="co-fgroup">
+          <label>Phone Number</label>
+          <input type="tel" id="phone" placeholder="+1 234 567 8900" required/>
+        </div>
+        <div class="co-fgroup">
+          <label>Street Address</label>
+          <input type="text" id="street" placeholder="123 Main Street, Apt 4B" required/>
+        </div>
+        <div class="co-frow">
+          <div class="co-fgroup">
+            <label>City</label>
+            <input type="text" id="city" placeholder="New York" required/>
+          </div>
+          <div class="co-fgroup">
+            <label>ZIP Code</label>
+            <input type="text" id="zip" placeholder="10001" required/>
+          </div>
+        </div>
+        <div class="co-fgroup">
+          <label>Additional Notes <span style="font-weight:400;color:var(--text-muted)">(optional)</span></label>
+          <textarea id="notes" placeholder="Ring bell, leave at door, any allergies..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Payment method -->
+      <div class="co-card">
+        <div class="co-card-title"><i class="fas fa-credit-card"></i> Payment Method</div>
+        <div class="payment-options" id="paymentOptions">
+          <div class="payment-option selected" data-method="cod">
+            <div class="payment-radio"></div>
+            <div class="payment-icon cod"><i class="fas fa-money-bill-wave"></i></div>
+            <div class="payment-label">
+              <strong>Cash on Delivery</strong>
+              <span>Pay when your order arrives</span>
+            </div>
+          </div>
+          <div class="payment-option" data-method="card">
+            <div class="payment-radio"></div>
+            <div class="payment-icon card"><i class="fas fa-credit-card"></i></div>
+            <div class="payment-label">
+              <strong>Credit / Debit Card</strong>
+              <span>Visa, Mastercard, AMEX</span>
+            </div>
+          </div>
+          <div class="payment-option" data-method="wallet">
+            <div class="payment-radio"></div>
+            <div class="payment-icon wallet"><i class="fas fa-wallet"></i></div>
+            <div class="payment-label">
+              <strong>Digital Wallet</strong>
+              <span>Apple Pay, Google Pay, PayPal</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card details -->
+        <div class="card-details" id="cardDetails">
+          <div class="co-fgroup" style="margin-bottom:14px">
+            <label>Card Number</label>
+            <input type="text" placeholder="1234 5678 9012 3456" maxlength="19" id="cardNum"/>
+          </div>
+          <div class="co-frow">
+            <div class="co-fgroup" style="margin-bottom:0">
+              <label>Expiry Date</label>
+              <input type="text" placeholder="MM / YY" maxlength="7" id="cardExp"/>
+            </div>
+            <div class="co-fgroup" style="margin-bottom:0">
+              <label>CVV</label>
+              <input type="text" placeholder="123" maxlength="4" id="cardCvv"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Order summary -->
+    <div>
+      <div class="order-summary-card">
+        <div class="summary-title">Order Summary</div>
+        <div class="summary-items" id="summaryItems">
+          <div class="empty-cart-msg">Your cart is empty. <a href="return_meal.html">Browse meals</a></div>
+        </div>
+        <div id="summaryTotals" style="display:none">
+          <div class="summary-divider"></div>
+          <div class="summary-row"><span>Subtotal</span><span id="sumSubtotal">$0.00</span></div>
+          <div class="summary-row saving" id="sumSavingRow" style="display:none"><span><i class="fas fa-tag"></i> You saved</span><span id="sumSaving">$0.00</span></div>
+          <div class="summary-row"><span>Delivery fee</span><span>$2.99</span></div>
+          <div class="summary-row total"><span>Total</span><span id="sumTotal">$0.00</span></div>
+        </div>
+        <button class="place-order-btn" id="placeOrderBtn" onclick="placeOrder()">
+          <i class="fas fa-lock"></i> Place Order
+        </button>
+        <div class="secure-note"><i class="fas fa-shield-alt"></i> Your payment info is 100% secure</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script src="cart.js"></script>
+<script src="modal.js"></script>
+<script>
+  // Build order summary from cart
+  function buildSummary() {
+    const cart = window.lomaCart ? window.lomaCart.getCart() : [];
+    const summaryItems = document.getElementById('summaryItems');
+    const summaryTotals = document.getElementById('summaryTotals');
+
+    if (!cart || cart.length === 0) {
+      summaryItems.innerHTML = '<div class="empty-cart-msg">Your cart is empty. <a href="return_meal.html">Browse meals</a></div>';
+      summaryTotals.style.display = 'none';
+      document.getElementById('placeOrderBtn').disabled = true;
+      return;
+    }
+
+    summaryItems.innerHTML = cart.map(item => `
+      <div class="summary-item">
+        <div class="summary-item-info">
+          <div class="s-name">${item.name} <span style="color:var(--text-muted);font-weight:400">×${item.qty}</span></div>
+          <div class="s-meta">${item.restaurant}</div>
+        </div>
+        <div class="summary-item-price">$${(item.price * item.qty).toFixed(2)}</div>
+      </div>
+    `).join('');
+
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const original = cart.reduce((s, i) => s + i.originalPrice * i.qty, 0);
+    const saved = original - subtotal;
+    const total = subtotal + 2.99;
+
+    document.getElementById('sumSubtotal').textContent = '$' + subtotal.toFixed(2);
+    document.getElementById('sumTotal').textContent = '$' + total.toFixed(2);
+    if (saved > 0.01) {
+      document.getElementById('sumSaving').textContent = '-$' + saved.toFixed(2);
+      document.getElementById('sumSavingRow').style.display = 'flex';
+    }
+    summaryTotals.style.display = 'block';
+    document.getElementById('placeOrderBtn').disabled = false;
+  }
+
+  // Payment option select
+  document.querySelectorAll('.payment-option').forEach(opt => {
+    opt.addEventListener('click', function() {
+      document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+      this.classList.add('selected');
+      const method = this.dataset.method;
+      const cardDetails = document.getElementById('cardDetails');
+      if (method === 'card') { cardDetails.classList.add('show'); }
+      else { cardDetails.classList.remove('show'); }
+    });
+  });
+
+  // Card number formatting
+  document.getElementById('cardNum')?.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,16);
+    this.value = v.replace(/(.{4})/g,'$1 ').trim();
+  });
+  document.getElementById('cardExp')?.addEventListener('input', function() {
+    let v = this.value.replace(/\D/g,'').substring(0,4);
+    if (v.length > 2) v = v.substring(0,2) + ' / ' + v.substring(2);
+    this.value = v;
+  });
+
+  // Validate required fields
+  function validateForm() {
+    const required = ['fname','lname','phone','street','city','zip'];
+    for (const id of required) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) { el.focus(); el.style.borderColor = '#e05252'; return false; }
+      el.style.borderColor = '';
+    }
+    const method = document.querySelector('.payment-option.selected')?.dataset.method;
+    if (method === 'card') {
+      const num = document.getElementById('cardNum').value.replace(/\s/g,'');
+      if (num.length < 16) { alert('Please enter a valid card number.'); return false; }
+    }
+    return true;
+  }
+
+  // Place order
+  function placeOrder() {
+    if (!validateForm()) return;
+    const cart = window.lomaCart ? window.lomaCart.getCart() : [];
+    if (!cart || cart.length === 0) { alert('Your cart is empty!'); return; }
+
+    const method = document.querySelector('.payment-option.selected')?.dataset.method || 'cod';
+    const fname = document.getElementById('fname').value.trim();
+    const lname = document.getElementById('lname').value.trim();
+    const address = `${document.getElementById('street').value.trim()}, ${document.getElementById('city').value.trim()} ${document.getElementById('zip').value.trim()}`;
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const total = (subtotal + 2.99).toFixed(2);
+    const orderId = 'LM-' + Date.now().toString().slice(-6);
+
+    // Save order info for confirmation page
+    localStorage.setItem('lomaOrder', JSON.stringify({
+      orderId, fname, lname, address,
+      method, cart, subtotal: subtotal.toFixed(2), total,
+      date: new Date().toLocaleString()
+    }));
+
+    // Clear cart
+    localStorage.removeItem('lomaCart');
+    window.location.href = 'order-confirm.html';
+  }
+
+  // Init on load
+  document.addEventListener('DOMContentLoaded', buildSummary);
+</script>
+</body>
+</html>

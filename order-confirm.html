@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Order Confirmed — Lo'ma</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .confirm-page{min-height:100vh;padding:100px 24px 60px;background:var(--bg);display:flex;align-items:flex-start;justify-content:center}
+    .confirm-wrapper{max-width:660px;width:100%}
+
+    /* Success header */
+    .confirm-hero{text-align:center;padding:44px 24px;background:var(--white);border:1px solid var(--border);border-radius:20px;box-shadow:var(--shadow-sm);margin-bottom:24px;position:relative;overflow:hidden}
+    .confirm-hero::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;background:radial-gradient(circle,rgba(46,139,74,0.07) 0%,transparent 70%);border-radius:50%}
+    .confirm-check{width:80px;height:80px;border-radius:50%;background:var(--green-light);color:var(--green-mid);font-size:2.2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 22px;animation:checkPop 0.5s cubic-bezier(.4,0,.2,1) both}
+    @keyframes checkPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+    .confirm-hero h1{font-family:var(--font-display);font-size:clamp(1.7rem,3vw,2.2rem);font-weight:900;color:var(--dark);margin-bottom:8px}
+    .confirm-hero p{color:var(--text-muted);font-size:0.97rem;margin-bottom:22px}
+    .confirm-order-id{display:inline-flex;align-items:center;gap:8px;background:var(--green-light);color:var(--green-deep);font-weight:700;font-size:0.88rem;padding:8px 20px;border-radius:50px;border:1px solid rgba(46,139,74,0.2)}
+
+    /* Steps progress */
+    .delivery-steps{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+    .delivery-steps h3{font-size:0.78rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:22px}
+    .d-steps{display:flex;justify-content:space-between;align-items:flex-start;position:relative}
+    .d-steps::before{content:'';position:absolute;top:20px;left:20px;right:20px;height:2px;background:var(--border);z-index:0}
+    .d-steps-progress{position:absolute;top:20px;left:20px;height:2px;background:var(--green-mid);z-index:1;transition:width 1s ease;width:33%}
+    .d-step{display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;z-index:2;flex:1}
+    .d-step-circle{width:40px;height:40px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:0.9rem;color:var(--text-muted);transition:var(--transition)}
+    .d-step.done .d-step-circle{background:var(--green-mid);border-color:var(--green-mid);color:#fff}
+    .d-step.active .d-step-circle{border-color:var(--green-mid);color:var(--green-mid);box-shadow:0 0 0 4px rgba(46,139,74,0.15);animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{box-shadow:0 0 0 4px rgba(46,139,74,0.15)}50%{box-shadow:0 0 0 8px rgba(46,139,74,0.08)}}
+    .d-step-label{font-size:0.78rem;font-weight:600;color:var(--text-muted);text-align:center;max-width:70px}
+    .d-step.done .d-step-label,.d-step.active .d-step-label{color:var(--green-mid)}
+
+    /* Order details */
+    .order-details{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:26px 28px;margin-bottom:24px;box-shadow:var(--shadow-sm)}
+    .od-title{font-size:0.78rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:20px}
+    .od-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+    @media(max-width:480px){.od-grid{grid-template-columns:1fr}}
+    .od-item label{display:block;font-size:0.8rem;color:var(--text-muted);margin-bottom:4px}
+    .od-item strong{font-size:0.93rem;color:var(--dark);font-weight:700}
+    .od-divider{height:1px;background:var(--border);margin:20px 0}
+    .od-items{display:flex;flex-direction:column;gap:12px}
+    .od-meal{display:flex;justify-content:space-between;align-items:center}
+    .od-meal-name{font-size:0.9rem;font-weight:600;color:var(--dark)}
+    .od-meal-meta{font-size:0.8rem;color:var(--text-muted)}
+    .od-meal-price{font-size:0.92rem;font-weight:700;color:var(--dark)}
+    .od-totals{margin-top:16px;border-top:1px solid var(--border);padding-top:14px}
+    .od-row{display:flex;justify-content:space-between;font-size:0.9rem;color:var(--text-muted);margin-bottom:8px}
+    .od-row.saving{color:var(--green-mid);font-weight:600}
+    .od-row.total{font-size:1.05rem;font-weight:800;color:var(--dark);margin-bottom:0;margin-top:6px}
+
+    /* Actions */
+    .confirm-actions{display:flex;gap:14px;flex-wrap:wrap}
+    .ca-btn{flex:1;min-width:140px;padding:13px 22px;border-radius:12px;font-weight:700;font-size:0.93rem;text-align:center;text-decoration:none;transition:var(--transition);cursor:pointer;border:none;font-family:var(--font-body)}
+    .ca-btn.primary{background:var(--green-mid);color:#fff}
+    .ca-btn.primary:hover{background:var(--green-deep);transform:translateY(-2px);box-shadow:0 8px 24px rgba(46,139,74,0.3)}
+    .ca-btn.outline{background:var(--white);color:var(--text);border:1.5px solid var(--border)}
+    .ca-btn.outline:hover{border-color:var(--green-mid);color:var(--green-mid);background:var(--green-light)}
+    .eta-badge{display:inline-flex;align-items:center;gap:8px;background:#fff3e0;color:#f57c00;font-size:0.85rem;font-weight:700;padding:8px 18px;border-radius:50px;border:1px solid rgba(245,124,0,0.2);margin-top:14px}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="nav-container">
+    <a href="index.html" class="logo">Lo'<span>ma</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="new_meal.html">Fresh Meals</a></li>
+      <li><a href="custORrest.html">Returned Meals</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-auth">
+      <a class="cart-icon-btn" href="#" onclick="window.lomaCart&&lomaCart.toggleSidebar();return false;" id="cartNavBtn" title="Your Cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </a>
+      <a class="login-btn" href="login.html">Log In</a>
+      <a class="signup-btn" href="signup.html">Sign Up</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<ul class="mobile-menu" id="mobileMenu">
+  <li><a href="index.html">Home</a></li>
+  <li><a href="new_meal.html">Fresh Meals</a></li>
+  <li><a href="custORrest.html">Returned Meals</a></li>
+  <li><a href="about.html">About Us</a></li>
+  <li><a href="contact.html">Contact</a></li>
+  <div class="mobile-auth">
+    <a class="login-btn" href="login.html">Log In</a>
+    <a class="signup-btn" href="signup.html">Sign Up</a>
+  </div>
+</ul>
+
+<div class="confirm-page">
+  <div class="confirm-wrapper">
+    <!-- Hero -->
+    <div class="confirm-hero">
+      <div class="confirm-check"><i class="fas fa-check"></i></div>
+      <h1>Order Confirmed!</h1>
+      <p>Thank you! Your order has been placed and is being prepared.</p>
+      <div class="confirm-order-id"><i class="fas fa-receipt"></i> <span id="orderIdDisplay">LM-000000</span></div>
+      <div class="eta-badge"><i class="fas fa-clock"></i> Estimated delivery: 30–45 minutes</div>
+    </div>
+
+    <!-- Delivery steps -->
+    <div class="delivery-steps">
+      <h3><i class="fas fa-truck" style="color:var(--green-mid);margin-right:6px"></i> Delivery Status</h3>
+      <div class="d-steps">
+        <div class="d-steps-progress" id="stepsProgress"></div>
+        <div class="d-step done">
+          <div class="d-step-circle"><i class="fas fa-check"></i></div>
+          <div class="d-step-label">Order Placed</div>
+        </div>
+        <div class="d-step active">
+          <div class="d-step-circle"><i class="fas fa-utensils"></i></div>
+          <div class="d-step-label">Being Prepared</div>
+        </div>
+        <div class="d-step">
+          <div class="d-step-circle"><i class="fas fa-motorcycle"></i></div>
+          <div class="d-step-label">On the Way</div>
+        </div>
+        <div class="d-step">
+          <div class="d-step-circle"><i class="fas fa-home"></i></div>
+          <div class="d-step-label">Delivered</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order details -->
+    <div class="order-details">
+      <div class="od-title">Order Details</div>
+      <div class="od-grid">
+        <div class="od-item"><label>Order ID</label><strong id="detOrderId">—</strong></div>
+        <div class="od-item"><label>Date & Time</label><strong id="detDate">—</strong></div>
+        <div class="od-item"><label>Delivery To</label><strong id="detName">—</strong></div>
+        <div class="od-item"><label>Address</label><strong id="detAddress">—</strong></div>
+        <div class="od-item"><label>Payment Method</label><strong id="detPayment">—</strong></div>
+        <div class="od-item"><label>Status</label><strong style="color:var(--green-mid)">Confirmed ✓</strong></div>
+      </div>
+      <div class="od-divider"></div>
+      <div class="od-title">Items Ordered</div>
+      <div class="od-items" id="detItems"><p style="color:var(--text-muted);font-size:0.9rem">No items found.</p></div>
+      <div class="od-totals">
+        <div class="od-row"><span>Subtotal</span><span id="detSubtotal">—</span></div>
+        <div class="od-row saving" id="detSavingRow" style="display:none"><span><i class="fas fa-tag"></i> You saved</span><span id="detSaving">—</span></div>
+        <div class="od-row"><span>Delivery</span><span>$2.99</span></div>
+        <div class="od-row total"><span>Total Paid</span><span id="detTotal">—</span></div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="confirm-actions">
+      <a href="index.html" class="ca-btn primary"><i class="fas fa-home" style="margin-right:8px"></i> Back to Home</a>
+      <a href="return_meal.html" class="ca-btn outline"><i class="fas fa-utensils" style="margin-right:8px"></i> Order More</a>
+    </div>
+  </div>
+</div>
+
+<script src="main.js"></script>
+<script src="cart.js"></script>
+<script src="modal.js"></script>
+<script>
+  const PAYMENT_LABELS = { cod: 'Cash on Delivery', card: 'Credit / Debit Card', wallet: 'Digital Wallet' };
+
+  function loadOrder() {
+    const order = JSON.parse(localStorage.getItem('lomaOrder') || 'null');
+    if (!order) return;
+
+    document.getElementById('orderIdDisplay').textContent = order.orderId;
+    document.getElementById('detOrderId').textContent = order.orderId;
+    document.getElementById('detDate').textContent = order.date;
+    document.getElementById('detName').textContent = `${order.fname} ${order.lname}`;
+    document.getElementById('detAddress').textContent = order.address;
+    document.getElementById('detPayment').textContent = PAYMENT_LABELS[order.method] || order.method;
+    document.getElementById('detSubtotal').textContent = '$' + order.subtotal;
+    document.getElementById('detTotal').textContent = '$' + order.total;
+
+    if (order.cart && order.cart.length > 0) {
+      const orig = order.cart.reduce((s, i) => s + i.originalPrice * i.qty, 0);
+      const sub = parseFloat(order.subtotal);
+      const saved = orig - sub;
+      if (saved > 0.01) {
+        document.getElementById('detSaving').textContent = '-$' + saved.toFixed(2);
+        document.getElementById('detSavingRow').style.display = 'flex';
+      }
+      document.getElementById('detItems').innerHTML = order.cart.map(item => `
+        <div class="od-meal">
+          <div>
+            <div class="od-meal-name">${item.name} <span style="color:var(--text-muted);font-weight:400">×${item.qty}</span></div>
+            <div class="od-meal-meta">${item.restaurant}</div>
+          </div>
+          <div class="od-meal-price">$${(item.price * item.qty).toFixed(2)}</div>
+        </div>
+      `).join('');
+    }
+
+    // Clean up storage
+    localStorage.removeItem('lomaOrder');
+  }
+
+  document.addEventListener('DOMContentLoaded', loadOrder);
+</script>
+</body>
+</html>

@@ -6,6 +6,46 @@
   <title>Welcome — Lo'ma</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .role-page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:100px 24px 60px;background:var(--bg);position:relative;overflow:hidden}
+    .role-page::before{content:'';position:absolute;top:-180px;right:-180px;width:500px;height:500px;background:radial-gradient(circle,rgba(46,139,74,0.09) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+    .role-page::after{content:'';position:absolute;bottom:-120px;left:-120px;width:400px;height:400px;background:radial-gradient(circle,rgba(240,124,42,0.07) 0%,transparent 70%);border-radius:50%;pointer-events:none}
+    .role-wrapper{max-width:880px;width:100%;text-align:center;position:relative;z-index:1}
+    .role-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--green-light);color:var(--green-deep);font-size:0.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:28px;border:1px solid rgba(46,139,74,0.2)}
+    .role-title{font-family:var(--font-display);font-size:clamp(2rem,4.5vw,3rem);font-weight:900;color:var(--dark);margin-bottom:14px;line-height:1.15}
+    .role-title span{color:var(--green-mid)}
+    .role-subtitle{color:var(--text-muted);font-size:1.05rem;margin-bottom:52px;max-width:500px;margin-left:auto;margin-right:auto;line-height:1.6}
+    .roles-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px}
+    @media(max-width:620px){.roles-grid{grid-template-columns:1fr}}
+    .role-card-new{display:flex;flex-direction:column;align-items:flex-start;background:var(--white);border:2px solid var(--border);border-radius:20px;padding:32px 28px;text-decoration:none;color:inherit;position:relative;overflow:hidden;transition:all 0.32s cubic-bezier(.4,0,.2,1);text-align:left}
+    .role-card-new:hover{transform:translateY(-8px);box-shadow:0 20px 56px rgba(0,0,0,0.11)}
+    .role-card-new.customer:hover{border-color:var(--green-mid)}
+    .role-card-new.restaurant:hover{border-color:var(--orange)}
+    .role-arrow-badge{position:absolute;top:24px;right:24px;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;opacity:0;transform:translateX(-8px);transition:all 0.28s ease}
+    .customer .role-arrow-badge{background:var(--green-light);color:var(--green-mid)}
+    .restaurant .role-arrow-badge{background:var(--orange-light);color:var(--orange)}
+    .role-card-new:hover .role-arrow-badge{opacity:1;transform:translateX(0)}
+    .role-icon-wrap{width:60px;height:60px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:1.55rem;margin-bottom:22px;transition:transform 0.3s ease}
+    .role-card-new:hover .role-icon-wrap{transform:scale(1.08)}
+    .customer .role-icon-wrap{background:var(--green-light);color:var(--green-mid)}
+    .restaurant .role-icon-wrap{background:var(--orange-light);color:var(--orange)}
+    .role-card-title{font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--dark);margin-bottom:10px}
+    .role-card-desc{color:var(--text-muted);font-size:0.92rem;line-height:1.6;margin-bottom:22px}
+    .role-features{display:flex;flex-direction:column;gap:8px;margin-bottom:26px;width:100%}
+    .role-feature{display:flex;align-items:center;gap:10px;font-size:0.87rem;color:var(--text)}
+    .role-feature .feat-dot{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.6rem;flex-shrink:0}
+    .customer .feat-dot{background:var(--green-light);color:var(--green-mid)}
+    .restaurant .feat-dot{background:var(--orange-light);color:var(--orange)}
+    .role-cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;font-weight:700;font-size:0.93rem;padding:12px 22px;border-radius:10px;border:none;transition:all 0.26s ease;width:100%;text-decoration:none;cursor:pointer}
+    .customer .role-cta-btn{background:var(--green-mid);color:#fff}
+    .customer .role-cta-btn:hover{background:var(--green-deep)}
+    .restaurant .role-cta-btn{background:var(--orange);color:#fff}
+    .restaurant .role-cta-btn:hover{background:#d4691f}
+    .role-divider{display:flex;align-items:center;gap:14px;color:var(--text-muted);font-size:0.85rem;margin-bottom:24px}
+    .role-divider::before,.role-divider::after{content:'';flex:1;height:1px;background:var(--border)}
+    .role-back{color:var(--text-muted);font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;transition:color 0.2s;padding:8px 16px;border-radius:8px}
+    .role-back:hover{color:var(--green-mid);background:var(--green-light)}
+  </style>
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -14,11 +54,15 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="new_meal.html">Fresh Meals</a></li>
-      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li class="active"><a href="custORrest.html">Returned Meals</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-auth">
+      <a class="cart-icon-btn" href="#" onclick="window.lomaCart&&lomaCart.toggleSidebar();return false;" id="cartNavBtn" title="Your Cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </a>
       <a class="login-btn" href="login.html">Log In</a>
       <a class="signup-btn" href="signup.html">Sign Up</a>
     </div>
@@ -28,7 +72,7 @@
 <ul class="mobile-menu" id="mobileMenu">
   <li><a href="index.html">Home</a></li>
   <li><a href="new_meal.html">Fresh Meals</a></li>
-  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li class="active"><a href="custORrest.html">Returned Meals</a></li>
   <li><a href="about.html">About Us</a></li>
   <li><a href="contact.html">Contact</a></li>
   <div class="mobile-auth">
@@ -37,24 +81,47 @@
   </div>
 </ul>
 
-<section class="welcome-section">
-  <h1>Welcome to <span class="highlight">Lo'ma</span></h1>
-  <p class="welcome-lead">Are you a customer looking for great meals, or a restaurant with returned meals to list?</p>
-  <div class="roles-cards">
-    <a href="return_meal.html" class="role-card" style="text-decoration:none">
-      <div class="role-icon"><i class="fas fa-user iconfront-icon"></i></div>
-      <h2>I'm a Customer</h2>
-      <p>Browse discounted returned meals and save money on delicious food near you.</p>
-    </a>
-    <a href="restaurant.html" class="role-card" style="text-decoration:none">
-      <div class="role-icon"><i class="fas fa-store iconfront-icon"></i></div>
-      <h2>I'm a Restaurant</h2>
-      <p>List your returned meals and recover costs while reducing food waste.</p>
-    </a>
+<div class="role-page">
+  <div class="role-wrapper">
+    <div class="role-eyebrow"><i class="fas fa-recycle"></i> Returned Meals</div>
+    <h1 class="role-title">How would you like to<br/><span>get started?</span></h1>
+    <p class="role-subtitle">Whether you're looking for a great deal or want to reduce food waste, we've got you covered.</p>
+
+    <div class="roles-grid">
+      <a href="return_meal.html" class="role-card-new customer">
+        <div class="role-arrow-badge"><i class="fas fa-arrow-right"></i></div>
+        <div class="role-icon-wrap"><i class="fas fa-user"></i></div>
+        <div class="role-card-title">I'm a Customer</div>
+        <p class="role-card-desc">Find delicious meals at incredible prices — save money and help fight food waste at the same time.</p>
+        <div class="role-features">
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Browse discounted returned meals</div>
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Save up to 50% on premium food</div>
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Fast & reliable delivery</div>
+        </div>
+        <span class="role-cta-btn">Browse Meals <i class="fas fa-arrow-right"></i></span>
+      </a>
+
+      <a href="restaurant.html" class="role-card-new restaurant">
+        <div class="role-arrow-badge"><i class="fas fa-arrow-right"></i></div>
+        <div class="role-icon-wrap"><i class="fas fa-store"></i></div>
+        <div class="role-card-title">I'm a Restaurant</div>
+        <p class="role-card-desc">List your returned meals and recover costs while gaining new customers — all while reducing waste.</p>
+        <div class="role-features">
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Recover costs on returned orders</div>
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Reduce food waste efficiently</div>
+          <div class="role-feature"><span class="feat-dot"><i class="fas fa-check"></i></span> Gain new loyal customers</div>
+        </div>
+        <span class="role-cta-btn">List a Meal <i class="fas fa-arrow-right"></i></span>
+      </a>
+    </div>
+
+    <div class="role-divider">or</div>
+    <a href="index.html" class="role-back"><i class="fas fa-chevron-left"></i> Back to Home</a>
   </div>
-</section>
+</div>
 
 <script src="main.js"></script>
+<script src="cart.js"></script>
 <script src="modal.js"></script>
 </body>
 </html>

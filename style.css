@@ -1,6 +1,4 @@
-/* ============================================================
-   Lo'ma — Global Design System
-   ============================================================ */
+
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 :root {
@@ -501,3 +499,9 @@ footer{background:var(--dark-2);color:#cdd9ce;padding:70px 0 28px}
   .modal-box { padding: 32px 22px 28px; }
   .modal-social { flex-direction: column; }
 }
+
+/* ===== CART ICON NAVBAR ===== */
+.cart-icon-btn{position:relative;width:40px;height:40px;border-radius:10px;background:var(--bg);border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text);font-size:1rem;transition:var(--transition);cursor:pointer;text-decoration:none;flex-shrink:0}
+.cart-icon-btn:hover{background:var(--green-light);border-color:var(--green-mid);color:var(--green-mid);transform:none}
+.cart-badge{position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--orange);color:#fff;font-size:0.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--white);animation:badgePop 0.3s cubic-bezier(.4,0,.2,1)}
+@keyframes badgePop{0%{transform:scale(0)}70%{transform:scale(1.2)}100%{transform:scale(1)}}

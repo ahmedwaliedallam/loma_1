@@ -14,11 +14,15 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="new_meal.html">Fresh Meals</a></li>
-      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li><a href="custORrest.html">Returned Meals</a></li>
       <li><a href="about.html">About Us</a></li>
       <li class="active"><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-auth">
+      <a class="cart-icon-btn" href="#" onclick="window.lomaCart&&lomaCart.toggleSidebar();return false;" id="cartNavBtn" title="Your Cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </a>
       <a class="login-btn" href="login.html">Log In</a>
       <a class="signup-btn" href="signup.html">Sign Up</a>
     </div>
@@ -28,7 +32,7 @@
 <ul class="mobile-menu" id="mobileMenu">
   <li><a href="index.html">Home</a></li>
   <li><a href="new_meal.html">Fresh Meals</a></li>
-  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li><a href="custORrest.html">Returned Meals</a></li>
   <li><a href="about.html">About Us</a></li>
   <li class="active"><a href="contact.html">Contact</a></li>
   <div class="mobile-auth">
@@ -81,13 +85,14 @@
   <div class="co">
     <div class="footer-content">
       <div class="footer-col"><div class="footer-logo">Lo'<span>ma</span></div><p>Save Food, Save Money.</p></div>
-      <div class="footer-col"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="new_meal.html">Fresh Meals</a></li><li><a href="return_meal.html">Returned Meals</a></li><li><a href="about.html">About Us</a></li></ul></div>
+      <div class="footer-col"><h3>Quick Links</h3><ul><li><a href="index.html">Home</a></li><li><a href="new_meal.html">Fresh Meals</a></li><li><a href="custORrest.html">Returned Meals</a></li><li><a href="about.html">About Us</a></li></ul></div>
       <div class="footer-col"><h3>Contact</h3><ul><li><i class="fas fa-envelope"></i> support@loma.com</li><li><i class="fas fa-phone"></i> +1 234 567 8900</li></ul></div>
     </div>
     <div class="copyright"><p>&copy; 2025 Lo'ma Project. Designed for Web Development Course.</p></div>
   </div>
 </footer>
 <script src="main.js"></script>
+<script src="cart.js"></script>
 <script src="modal.js"></script>
 </body>
 </html>

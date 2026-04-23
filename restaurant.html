@@ -6,6 +6,62 @@
   <title>List a Returned Meal — Lo'ma</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    .rest-page{min-height:100vh;padding:100px 24px 60px;background:var(--bg)}
+    .rest-header{text-align:center;margin-bottom:48px}
+    .rest-eyebrow{display:inline-flex;align-items:center;gap:8px;background:var(--orange-light);color:var(--orange);font-size:0.78rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:6px 18px;border-radius:50px;margin-bottom:20px;border:1px solid rgba(240,124,42,0.2)}
+    .rest-header h1{font-family:var(--font-display);font-size:clamp(1.9rem,3.5vw,2.7rem);font-weight:900;color:var(--dark);margin-bottom:10px}
+    .rest-header p{color:var(--text-muted);font-size:1rem;max-width:480px;margin:0 auto}
+    .rest-layout{max-width:860px;margin:0 auto;display:grid;grid-template-columns:1fr 280px;gap:28px;align-items:start}
+    @media(max-width:768px){.rest-layout{grid-template-columns:1fr}}
+    .rest-form-card{background:var(--white);border:1px solid var(--border);border-radius:20px;padding:36px 36px 32px;box-shadow:var(--shadow-sm)}
+    .form-section-title{font-size:0.78rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+    .fgroup{margin-bottom:20px}
+    .fgroup label{display:block;font-weight:600;font-size:0.91rem;color:var(--text);margin-bottom:8px}
+    .fgroup label span{color:#e05252;margin-left:2px}
+    .fgroup input,.fgroup select,.fgroup textarea{width:100%;padding:12px 14px;font-size:0.93rem;font-family:var(--font-body);border:1.5px solid var(--border);border-radius:10px;background:var(--bg);transition:var(--transition);outline:none;color:var(--text);appearance:none}
+    .fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(240,124,42,0.1);background:var(--white)}
+    .fgroup .select-wrap{position:relative}
+    .fgroup .select-wrap::after{content:'\f107';font-family:'Font Awesome 6 Free';font-weight:900;position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
+    .frow{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .frow3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+    @media(max-width:520px){.frow,.frow3{grid-template-columns:1fr}}
+    .upload-zone{border:2px dashed var(--border);border-radius:12px;padding:36px 20px;text-align:center;background:var(--bg);cursor:pointer;transition:var(--transition);position:relative}
+    .upload-zone:hover,.upload-zone.dragover{border-color:var(--orange);background:var(--orange-light)}
+    .upload-zone input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .upload-zone i{font-size:2rem;color:var(--orange);margin-bottom:12px;display:block}
+    .upload-zone .up-title{font-weight:600;color:var(--text);font-size:0.95rem;margin-bottom:6px}
+    .upload-zone .up-sub{color:var(--text-muted);font-size:0.83rem}
+    .upload-zone .up-link{color:var(--orange);font-weight:700}
+    .rest-submit-btn{width:100%;padding:14px;background:var(--orange);color:#fff;border:none;border-radius:12px;font-weight:700;font-size:1rem;font-family:var(--font-body);transition:var(--transition);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;margin-top:8px}
+    .rest-submit-btn:hover{background:#d4691f;transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,124,42,0.3)}
+    /* Sidebar tips */
+    .rest-tips{display:flex;flex-direction:column;gap:16px}
+    .tip-card{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:22px 20px;box-shadow:var(--shadow-sm)}
+    .tip-card h4{font-size:0.92rem;font-weight:700;color:var(--dark);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+    .tip-card h4 i{color:var(--orange)}
+    .tip-card ul{display:flex;flex-direction:column;gap:8px}
+    .tip-card li{font-size:0.85rem;color:var(--text-muted);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+    .tip-card li::before{content:'•';color:var(--orange);font-weight:700;flex-shrink:0;margin-top:1px}
+    .steps-card{background:linear-gradient(135deg,var(--green-deep),#1a4a2e);border-radius:16px;padding:22px 20px;color:#fff}
+    .steps-card h4{font-size:0.92rem;font-weight:700;margin-bottom:16px;opacity:0.9}
+    .step-item{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+    .step-num{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.75rem;font-weight:700;flex-shrink:0;margin-top:1px}
+    .step-text{font-size:0.85rem;opacity:0.85;line-height:1.45}
+    /* Success overlay */
+    .success-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);z-index:9000;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.3s ease}
+    .success-overlay.show{opacity:1;pointer-events:all}
+    .success-box{background:#fff;border-radius:20px;padding:48px 40px;text-align:center;max-width:420px;width:90%;transform:scale(0.9);transition:transform 0.3s ease}
+    .success-overlay.show .success-box{transform:scale(1)}
+    .success-icon{width:72px;height:72px;border-radius:50%;background:var(--green-light);color:var(--green-mid);font-size:2rem;display:flex;align-items:center;justify-content:center;margin:0 auto 22px}
+    .success-box h3{font-family:var(--font-display);font-size:1.5rem;color:var(--dark);margin-bottom:10px}
+    .success-box p{color:var(--text-muted);font-size:0.93rem;margin-bottom:24px}
+    .success-box a{display:inline-block;padding:12px 28px;background:var(--green-mid);color:#fff;border-radius:10px;font-weight:700;font-size:0.93rem;transition:var(--transition)}
+    .success-box a:hover{background:var(--green-deep)}
+    /* Preview image */
+    .img-preview{margin-top:12px;border-radius:10px;overflow:hidden;display:none}
+    .img-preview img{width:100%;height:160px;object-fit:cover}
+  </style>
 </head>
 <body>
 <nav class="navbar" id="navbar">
@@ -14,11 +70,15 @@
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="new_meal.html">Fresh Meals</a></li>
-      <li><a href="return_meal.html">Returned Meals</a></li>
+      <li class="active"><a href="custORrest.html">Returned Meals</a></li>
       <li><a href="about.html">About Us</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
     <div class="nav-auth">
+      <a class="cart-icon-btn" href="#" onclick="window.lomaCart&&lomaCart.toggleSidebar();return false;" id="cartNavBtn" title="Your Cart">
+        <i class="fas fa-shopping-basket"></i>
+        <span class="cart-badge" id="cartBadge" style="display:none">0</span>
+      </a>
       <a class="login-btn" href="login.html">Log In</a>
       <a class="signup-btn" href="signup.html">Sign Up</a>
     </div>
@@ -28,7 +88,7 @@
 <ul class="mobile-menu" id="mobileMenu">
   <li><a href="index.html">Home</a></li>
   <li><a href="new_meal.html">Fresh Meals</a></li>
-  <li><a href="return_meal.html">Returned Meals</a></li>
+  <li class="active"><a href="custORrest.html">Returned Meals</a></li>
   <li><a href="about.html">About Us</a></li>
   <li><a href="contact.html">Contact</a></li>
   <div class="mobile-auth">
@@ -37,49 +97,167 @@
   </div>
 </ul>
 
-<section id="restaurant-form-section" class="form-section">
-  <form class="returned-form" onsubmit="event.preventDefault(); alert('Meal submitted for review!');">
-    <h2>List a Returned Meal</h2>
-    <p class="form-lead">Fill out the form below to add a new meal to the platform.</p>
-    <div class="fields-row">
-      <div class="form-group"><label>Restaurant Name</label><input type="text" placeholder="The Corner Bistro" required/></div>
-      <div class="form-group"><label>Meal Name</label><input type="text" placeholder="e.g., Gourmet Burger" required/></div>
-    </div>
-    <div class="form-group">
-      <label>Reason for Return</label>
-      <select>
-        <option value="">Select a reason...</option>
-        <option>Incorrect Order</option>
-        <option>Missing Items</option>
-        <option>Late Delivery</option>
-        <option>Cancellation</option>
-        <option>Wrong Ingredients</option>
-        <option>Cold food</option>
-      </select>
-    </div>
-    <div class="fields-row">
-      <div class="form-group"><label>Quantity</label><input type="number" min="1" placeholder="e.g., 5" required/></div>
-      <div class="form-group"><label>Discount %</label><input type="number" min="0" max="100" placeholder="e.g., 50" required/></div>
-      <div class="form-group"><label>Expiry Time</label><input type="datetime-local" required/></div>
-    </div>
-    <div class="form-group">
-      <label>Meal Image</label>
-      <div class="image-upload">
-        <label for="meal-img">
-          <div class="upload-area">
-            <i class="fas fa-cloud-upload-alt" style="font-size:1.8rem;margin-bottom:10px;color:var(--green-mid)"></i><br/>
-            <span class="upload-link">Upload a file</span> or drag and drop<br/>
-            <span class="upload-hint">PNG, JPG, GIF up to 10MB</span>
+<div class="rest-page">
+  <div class="rest-header">
+    <div class="rest-eyebrow"><i class="fas fa-store"></i> Restaurant Portal</div>
+    <h1>List a Returned Meal</h1>
+    <p>Fill in the details below and we'll put your meal in front of hungry customers right away.</p>
+  </div>
+
+  <div class="rest-layout">
+    <div class="rest-form-card">
+      <form id="restForm" novalidate>
+        <div class="form-section-title">Restaurant & Meal Info</div>
+        <div class="frow">
+          <div class="fgroup">
+            <label>Restaurant Name <span>*</span></label>
+            <input type="text" placeholder="e.g. The Corner Bistro" required/>
           </div>
-        </label>
-        <input id="meal-img" type="file" accept="image/png,image/jpeg,image/gif" style="display:none"/>
+          <div class="fgroup">
+            <label>Meal Name <span>*</span></label>
+            <input type="text" placeholder="e.g. Gourmet Burger" required/>
+          </div>
+        </div>
+        <div class="fgroup">
+          <label>Reason for Return <span>*</span></label>
+          <div class="select-wrap">
+            <select required>
+              <option value="">Select a reason...</option>
+              <option>Incorrect Order</option>
+              <option>Missing Items</option>
+              <option>Late Delivery</option>
+              <option>Cancellation</option>
+              <option>Wrong Ingredients</option>
+              <option>Cold Food Complaint</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-section-title" style="margin-top:8px">Pricing & Availability</div>
+        <div class="frow3">
+          <div class="fgroup">
+            <label>Quantity <span>*</span></label>
+            <input type="number" min="1" placeholder="e.g. 5" required/>
+          </div>
+          <div class="fgroup">
+            <label>Discount % <span>*</span></label>
+            <input type="number" min="1" max="90" placeholder="e.g. 30" required id="discountInput"/>
+          </div>
+          <div class="fgroup">
+            <label>Expiry Time <span>*</span></label>
+            <input type="datetime-local" required/>
+          </div>
+        </div>
+        <div class="frow" style="margin-bottom:4px">
+          <div class="fgroup">
+            <label>Original Price ($) <span>*</span></label>
+            <input type="number" min="0" step="0.01" placeholder="e.g. 14.99" required id="origPrice"/>
+          </div>
+          <div class="fgroup">
+            <label>Discounted Price</label>
+            <input type="text" id="calcPrice" placeholder="Auto-calculated" readonly style="background:#f0f0f0;cursor:default"/>
+          </div>
+        </div>
+        <div class="form-section-title" style="margin-top:8px">Meal Image</div>
+        <div class="upload-zone" id="uploadZone">
+          <input type="file" accept="image/png,image/jpeg,image/gif,image/webp" id="mealImgInput"/>
+          <i class="fas fa-cloud-upload-alt"></i>
+          <div class="up-title"><span class="up-link">Click to upload</span> or drag & drop</div>
+          <div class="up-sub">PNG, JPG, GIF, WEBP — max 10MB</div>
+        </div>
+        <div class="img-preview" id="imgPreview"><img id="previewImg" src="" alt="Preview"/></div>
+        <div class="fgroup" style="margin-top:20px;margin-bottom:0">
+          <label>Additional Notes</label>
+          <textarea placeholder="Any special instructions or details about the meal..." rows="3" style="resize:vertical"></textarea>
+        </div>
+        <button type="submit" class="rest-submit-btn">
+          <i class="fas fa-paper-plane"></i> Submit for Review
+        </button>
+      </form>
+    </div>
+
+    <div class="rest-tips">
+      <div class="steps-card">
+        <h4>How it works</h4>
+        <div class="step-item"><div class="step-num">1</div><div class="step-text">Fill in your meal details and set the discount</div></div>
+        <div class="step-item"><div class="step-num">2</div><div class="step-text">Our team reviews the listing within 30 minutes</div></div>
+        <div class="step-item"><div class="step-num">3</div><div class="step-text">Your meal goes live and customers can order it</div></div>
+        <div class="step-item" style="margin-bottom:0"><div class="step-num">4</div><div class="step-text">You receive payment after delivery confirmation</div></div>
+      </div>
+      <div class="tip-card">
+        <h4><i class="fas fa-lightbulb"></i> Tips for success</h4>
+        <ul>
+          <li>High-quality photos increase orders by up to 3x</li>
+          <li>Discounts of 30–50% perform best on our platform</li>
+          <li>Set realistic expiry times to avoid cancellations</li>
+          <li>Add clear notes about ingredients for allergy info</li>
+        </ul>
       </div>
     </div>
-    <button class="submit-btn" type="submit">Submit for Review</button>
-  </form>
-</section>
+  </div>
+</div>
+
+<!-- Success Modal -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-icon"><i class="fas fa-check"></i></div>
+    <h3>Meal Submitted!</h3>
+    <p>Your meal has been submitted for review. We'll have it live within 30 minutes.</p>
+    <a href="custORrest.html">Back to Returned Meals</a>
+  </div>
+</div>
 
 <script src="main.js"></script>
+<script src="cart.js"></script>
 <script src="modal.js"></script>
+<script>
+  // Price calculator
+  const origPrice = document.getElementById('origPrice');
+  const discountInput = document.getElementById('discountInput');
+  const calcPrice = document.getElementById('calcPrice');
+  function calcDiscounted() {
+    const p = parseFloat(origPrice.value), d = parseFloat(discountInput.value);
+    if (p > 0 && d > 0 && d < 100) {
+      calcPrice.value = '$' + (p * (1 - d / 100)).toFixed(2);
+    } else { calcPrice.value = ''; }
+  }
+  origPrice.addEventListener('input', calcDiscounted);
+  discountInput.addEventListener('input', calcDiscounted);
+
+  // Image preview
+  const mealImgInput = document.getElementById('mealImgInput');
+  const imgPreview = document.getElementById('imgPreview');
+  const previewImg = document.getElementById('previewImg');
+  const uploadZone = document.getElementById('uploadZone');
+  mealImgInput.addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+      const reader = new FileReader();
+      reader.onload = e => {
+        previewImg.src = e.target.result;
+        imgPreview.style.display = 'block';
+        uploadZone.style.borderStyle = 'solid';
+        uploadZone.style.borderColor = 'var(--orange)';
+      };
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+
+  // Drag & drop
+  uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+  uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+  uploadZone.addEventListener('drop', e => {
+    e.preventDefault(); uploadZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files && files[0]) { mealImgInput.files = files; mealImgInput.dispatchEvent(new Event('change')); }
+  });
+
+  // Form submit
+  document.getElementById('restForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    document.getElementById('successOverlay').classList.add('show');
+  });
+  document.getElementById('successOverlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+</script>
 </body>
 </html>
